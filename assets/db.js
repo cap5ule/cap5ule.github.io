@@ -88,13 +88,35 @@ $(function() {
 				var info = document.createElement("span");
 				info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
 				li.appendChild(info);
-				client.writeFile(files[i].name, files[i], {noOverwrite: true},function(error, stat) {
-					if (error) {
-						return showError(error); // Something went wrong.
-					}
 
-					alert(stat.humanSize + " file uploaded at this path: " + stat.path);
+				var fileReader = new FileReader({
+					'blob': true
 				});
+
+				//--------------------------------------------------------------------------------------------------------- 
+				// Once the file reader has read the file into memory, 
+				// do the dropbox upload 
+				//--------------------------------------------------------------------------------------------------------- 
+				fileReader.onload = function(e) {
+
+					// Get the raw file to PUT 
+					var rawBytes = e.target.result;
+
+					client.writeFile(files[i].name, rawBytes, {
+						noOverwrite: true
+					}, function(error, stat) {
+						if (error) {
+							return showError(error); // Something went wrong.
+						}
+
+						alert(stat.humanSize + " file uploaded at this path: " + stat.path);
+					});
+				};
+
+				//--------------------------------------------------------------------------------------------------------- 
+				// Start by loading the file into memory 
+				//--------------------------------------------------------------------------------------------------------- 
+				fileReader.readAsArrayBuffer(files[i]);
 			}
 		}
 	}
