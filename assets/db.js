@@ -88,7 +88,7 @@ $(function() {
 				var info = document.createElement("span");
 				info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
 				li.appendChild(info);
-				client.writeFile("files[i].name", files[i], function(error, stat) {
+				client.writeFile(files[i].name, files[i], function(error, stat) {
 					if (error) {
 						return showError(error); // Something went wrong.
 					}
