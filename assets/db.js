@@ -93,7 +93,7 @@ $(function() {
 						return showError(error); // Something went wrong.
 					}
 
-					alert("File saved as revision " + stat.revisionTag);
+					alert(stat.humanSize + " file uploaded at this path: " + stat.path);
 				});
 			}
 		}
