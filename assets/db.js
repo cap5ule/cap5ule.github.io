@@ -86,7 +86,8 @@ $(function() {
 				var li = document.createElement("li");
 				list.appendChild(li);
 				var info = document.createElement("span");
-				info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
+				var fileName = files[i].name
+				info.innerHTML = fileName + ": " + files[i].size + " bytes";
 				li.appendChild(info);
 
 				var fileReader = new FileReader({
@@ -102,7 +103,7 @@ $(function() {
 					// Get the raw file to PUT 
 					var rawBytes = e.target.result;
 
-					client.writeFile(files[i].name, rawBytes, {
+					client.writeFile(fileName, rawBytes, {
 						noOverwrite: true
 					}, function(error, stat) {
 						if (error) {
