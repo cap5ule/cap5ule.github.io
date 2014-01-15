@@ -65,13 +65,7 @@ $(function() {
 
 		alert("Hello, " + accountInfo.name + "!");
 	});
-	// client.writeFile("hello_world.txt", "Hello, world!\n", function(error, stat) {
-	// 	if (error) {
-	// 		return showError(error); // Something went wrong.
-	// 	}
 
-	// 	alert("File saved as revision " + stat.revisionTag);
-	// });
 	// Setup file handler
 	function handleFiles(elem) {
 		var files = elem.currentTarget.files;
@@ -90,34 +84,44 @@ $(function() {
 				info.innerHTML = fileName + ": " + files[i].size + " bytes";
 				li.appendChild(info);
 
-				var fileReader = new FileReader({
-					'blob': true
+				client.writeFile(fileName, files[i], {
+					noOverwrite: true
+				}, function(error, stat) {
+					if (error) {
+						return showError(error); // Something went wrong.
+					}
+
+					alert(stat.humanSize + " file uploaded at this path: " + stat.path);
 				});
+
+				// var fileReader = new FileReader({
+				// 	'blob': true
+				// });
 
 				//--------------------------------------------------------------------------------------------------------- 
 				// Once the file reader has read the file into memory, 
 				// do the dropbox upload 
 				//--------------------------------------------------------------------------------------------------------- 
-				fileReader.onload = function(e) {
+				// fileReader.onload = function(e) {
 
-					// Get the raw file to PUT 
-					var rawBytes = e.target.result;
+				// 	// Get the raw file to PUT 
+				// 	var rawBytes = e.target.result;
 
-					client.writeFile(fileName, rawBytes, {
-						noOverwrite: true
-					}, function(error, stat) {
-						if (error) {
-							return showError(error); // Something went wrong.
-						}
+				// 	client.writeFile(fileName, rawBytes, {
+				// 		noOverwrite: true
+				// 	}, function(error, stat) {
+				// 		if (error) {
+				// 			return showError(error); // Something went wrong.
+				// 		}
 
-						alert(stat.humanSize + " file uploaded at this path: " + stat.path);
-					});
-				};
+				// 		alert(stat.humanSize + " file uploaded at this path: " + stat.path);
+				// 	});
+				// };
 
 				//--------------------------------------------------------------------------------------------------------- 
 				// Start by loading the file into memory 
 				//--------------------------------------------------------------------------------------------------------- 
-				fileReader.readAsArrayBuffer(files[i]);
+				// fileReader.readAsArrayBuffer(files[i]);
 			}
 		}
 	}
