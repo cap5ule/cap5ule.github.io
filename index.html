@@ -3,29 +3,24 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>hello world</title>
-  
-<script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js">
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js">
 </script>
 <script src="/assets/db.js">
 </script>  
   <style type='text/css'>
     
   </style>
-  
-
-
-<script type='text/javascript'>//<![CDATA[ 
-window.onload=function(){
-	
-}//]]>  
-
-</script>
-
 
 </head>
 <body>
-  boo
-  
+<div id="fileList">
+    <p>No videos selected!</p>
+</div>
+<form id="create_video_sample" method="POST" enctype="multipart/form-data">
+    <!--This is where the actual json request lives, it has to come before the file input -->
+    <input type="file" id="fileElem" multiple accept="video/*" name="filePath" />
+</form>
 </body>
 
 
